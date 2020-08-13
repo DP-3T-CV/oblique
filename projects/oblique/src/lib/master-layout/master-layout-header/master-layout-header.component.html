@@ -12,7 +12,7 @@
 				</span>
 			</div>
 			<ul class="header-controls header-toggle">
-				<li class="nav-item">
+				<li class="control-item">
 					<a role="button" tabindex="0" title="{{'i18n.oblique.header.toggle' | translate}}" class="control-link" obMasterLayoutHeaderToggle>
 						<div class="application-header-toggle">
 							<span class="first-line"></span>
@@ -32,7 +32,7 @@
 				<li class="control-item" role="menuitem" *ngFor="let locale of locales">
 					<button class="control-locale" obMasterLayoutHeaderToggle (click)="changeLang(locale.locale)"
 							[class.active]="isLangActive(locale.locale)" [attr.id]="locale.id">
-						<span class="control-label">{{locale.locale}}</span>
+						<span class="control-label">{{locale.locale.toUpperCase()}}</span>
 					</button>
 				</li>
 			</ul>

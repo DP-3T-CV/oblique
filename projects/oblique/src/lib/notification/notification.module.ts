@@ -14,7 +14,7 @@ import {WINDOW, windowProvider} from '../utilities';
 export {ObNotificationComponent} from './notification.component';
 export {ObNotificationService} from './notification.service';
 export {ObNotificationConfig, CLEAR_NOTIFICATIONS_ON_ROUTE_CHANGE, GROUP_SIMILAR_NOTIFICATIONS} from './notification.config';
-export {ObINotification, ObENotificationType} from './notification.interfaces';
+export {ObINotification, ObINotificationConfig, ObENotificationType} from './notification.interfaces';
 
 @NgModule({
 	imports: [
@@ -24,7 +24,7 @@ export {ObINotification, ObENotificationType} from './notification.interfaces';
 	declarations: [ObNotificationComponent],
 	providers: [
 		{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
-		{provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false }},
+		{provide: STEPPER_GLOBAL_OPTIONS, useValue: {displayDefaultIndicatorType: false}},
 		{provide: WINDOW, useFactory: windowProvider}
 	],
 	exports: [ObNotificationComponent]

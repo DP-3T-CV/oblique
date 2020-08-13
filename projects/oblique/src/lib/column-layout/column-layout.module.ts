@@ -13,6 +13,8 @@ import {ObTelemetryService} from '../telemetry/telemetry.service';
 import {WINDOW, windowProvider} from '../utilities';
 
 export {ObColumnLayoutComponent} from './column-layout.component';
+export {ObColumnPanelDirective} from './column-panel.directive';
+export {ObColumnToggleDirective} from './column-toggle.directive';
 
 @NgModule({
 	imports: [
@@ -26,11 +28,13 @@ export {ObColumnLayoutComponent} from './column-layout.component';
 	],
 	providers: [
 		{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
-		{provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false }},
+		{provide: STEPPER_GLOBAL_OPTIONS, useValue: {displayDefaultIndicatorType: false}},
 		{provide: WINDOW, useFactory: windowProvider}
 	],
 	exports: [
-		ObColumnLayoutComponent
+		ObColumnLayoutComponent,
+		ObColumnPanelDirective,
+		ObColumnToggleDirective
 	]
 })
 export class ObColumnLayoutModule {

@@ -3,6 +3,7 @@ import {NgModelGroup} from '@angular/forms';
 import {ObSchemaValidationDirective} from './schema-validation.directive';
 
 @Directive({
+	// eslint-disable-next-line @angular-eslint/directive-selector
 	selector: '[ngModel]',
 })
 export class ObSchemaRequiredDirective implements OnInit {
@@ -10,8 +11,10 @@ export class ObSchemaRequiredDirective implements OnInit {
 	@HostBinding('attr.required') required: boolean;
 	@Input('name') name: string;
 
-	constructor(@Optional() private readonly schemaValidation: ObSchemaValidationDirective,
-				@Optional() private readonly modelGroup: NgModelGroup) {
+	constructor(
+		@Optional() private readonly schemaValidation: ObSchemaValidationDirective,
+		@Optional() private readonly modelGroup: NgModelGroup
+	) {
 	}
 
 	ngOnInit() {

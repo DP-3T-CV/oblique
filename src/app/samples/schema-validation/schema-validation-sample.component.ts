@@ -4,6 +4,7 @@ import {ObNotificationService, ObSchemaValidationService} from 'oblique';
 import {of} from 'rxjs';
 
 @Component({
+	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'app-schema-validation',
 	templateUrl: './schema-validation-sample.component.html',
 	styles: [`
@@ -113,9 +114,11 @@ export class SchemaValidationSampleComponent implements OnInit {
 		}
 	});
 
-	constructor(private readonly schemaValidation: ObSchemaValidationService,
-				private readonly notification: ObNotificationService,
-				private readonly formBuilder: FormBuilder) {
+	constructor(
+		private readonly schemaValidation: ObSchemaValidationService,
+		private readonly notification: ObNotificationService,
+		private readonly formBuilder: FormBuilder
+	) {
 	}
 
 	ngOnInit(): void {

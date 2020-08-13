@@ -8,6 +8,7 @@ import {HttpMockErrorInterceptor} from './http-mock-error.interceptor';
 let requestId = 0;
 
 @Component({
+	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'http-api-interceptor-sample',
 	templateUrl: './http-interceptor-sample.component.html'
 })
@@ -27,9 +28,11 @@ export class HttpInterceptorSampleComponent {
 	variants = ObENotificationType;
 	parallelRequests = 5;
 
-	constructor(private readonly notificationService: ObNotificationService,
-				private readonly http: HttpClient,
-				private readonly interceptorEvents: ObHttpApiInterceptorEvents) {
+	constructor(
+		private readonly notificationService: ObNotificationService,
+		private readonly http: HttpClient,
+		private readonly interceptorEvents: ObHttpApiInterceptorEvents
+	) {
 
 		this.interceptorEvents.sessionExpired.subscribe(() => {
 			this.notificationService.warning('The session has expired');

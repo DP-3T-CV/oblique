@@ -39,6 +39,7 @@ export class ObThemeService {
 		this.head = document.head;
 		this.renderer = rendererFactory.createRenderer(null, null);
 		this.theme$ = this.mainTheme.asObservable();
+		this.mainTheme.next(THEMES.MATERIAL);
 		this.font$ = this.mainFont.asObservable();
 	}
 
@@ -108,7 +109,7 @@ export class ObThemeService {
 			this.renderer.setAttribute(
 				this.fontLink,
 				'onError',
-				`console.warn('Please consult http://oblique.bit.admin.ch for instructions on how to install Frutiger')`
+				'console.warn(\'Please consult http://oblique.bit.admin.ch for instructions on how to install Frutiger\')'
 			);
 		}
 	}

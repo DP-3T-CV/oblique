@@ -5,6 +5,7 @@ import {map, tap} from 'rxjs/operators';
 import {ObNotificationService, ObThemeService} from 'oblique';
 
 @Component({
+	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'app-nested-form-sample',
 	templateUrl: './nested-form-sample.component.html',
 	styleUrls: ['./mandatory.scss']
@@ -31,6 +32,7 @@ export class NestedFormSampleComponent {
 	}
 
 	validateForm(valid: boolean): void {
+		// eslint-disable-next-line no-unused-expressions
 		valid ? this.notification.success('Form valid!') : this.notification.error('Form not valid!');
 	}
 

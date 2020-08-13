@@ -6,6 +6,7 @@ import {ObUnsavedChangesService} from 'oblique';
 
 
 @Component({
+	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'app-unsaved-changes',
 	templateUrl: 'unsaved-changes-sample.component.html',
 	styles: [`
@@ -41,9 +42,11 @@ export class UnsavedChangesSampleComponent implements OnInit {
 	@ViewChild('form7') form7 = <NgModelGroup>{};
 
 
-	constructor(private readonly modalService: NgbModal,
-				private readonly formBuilder: FormBuilder,
-				private readonly unsavedChangesService: ObUnsavedChangesService) {
+	constructor(
+		private readonly modalService: NgbModal,
+		private readonly formBuilder: FormBuilder,
+		private readonly unsavedChangesService: ObUnsavedChangesService
+	) {
 	}
 
 	ngOnInit() {

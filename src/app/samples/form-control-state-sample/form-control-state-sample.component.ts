@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, NgForm, Validators, ValidationErrors} from '@ang
 import {ObNotificationService} from 'oblique';
 
 @Component({
+	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'app-form-control-state-sample',
 	templateUrl: './form-control-state-sample.component.html',
 	styles: [`
@@ -44,10 +45,8 @@ export class FormControlStateSampleComponent {
 	}
 
 	private customValidator(): ValidationErrors {
-		return (): ValidationErrors => {
-			return {
-				test: {value: 'i18n.validation.testValue'}
-			};
-		};
+		return (): ValidationErrors => ({
+			test: {value: 'i18n.validation.testValue'}
+		});
 	}
 }

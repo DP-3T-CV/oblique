@@ -5,6 +5,7 @@ import {merge, takeUntil} from 'rxjs/operators';
 import {ObNavTreeComponent, ObNavTreeItemModel, ObUnsubscribable} from 'oblique';
 
 @Component({
+	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'nav-tree-sample',
 	templateUrl: './nav-tree-sample.component.html'
 })
@@ -29,14 +30,13 @@ export class NavTreeSampleComponent extends ObUnsubscribable implements OnInit {
 	ngOnInit() {
 		this.route.data.pipe(takeUntil(this.unsubscribe))
 			.subscribe((data: {sample: any}) => {
-				this.items = data.sample.navTree.items.map((item: any) => {
-					return new ObNavTreeItemModel(item);
-				});
+				this.items = data.sample.navTree.items.map((item: any) => new ObNavTreeItemModel(item));
 			});
 	}
 }
 
 @Component({
+	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'nav-tree-detail-sample',
 	template: `
 		<div *ngIf="routing" class="card">
