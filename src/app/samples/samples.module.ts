@@ -24,6 +24,7 @@ import {DatepickerSampleComponent} from './datepicker-sample/datepicker-sample.c
 import {ErrorMessagesSampleComponent} from './error-messages-sample/error-messages-sample.component';
 import {FormControlStateSampleComponent} from './form-control-state-sample/form-control-state-sample.component';
 import {FilterBoxSampleComponent, PatternFilterPipe} from './filter-box-sample/filter-box-sample.component';
+import {InputClearComponent} from './input-clear/input-clear.component';
 import {MasterLayoutSampleComponent} from './master-layout/master-layout-sample.component';
 import {MultiselectSampleComponent} from './multiselect/multiselect-sample.component';
 import {NavigableSampleComponent} from './navigable/navigable-sample.component';
@@ -50,17 +51,17 @@ import {
 	ObErrorMessagesModule,
 	ObFilterBoxModule,
 	ObFormControlStateModule,
+	ObInputClearModule,
 	ObMultiselectModule,
 	ObNavigableModule,
 	ObNavTreeModule,
 	ObNestedFormModule,
 	ObNotificationModule,
 	ObNumberFormatModule,
-	ObSelectableModule,
 	ObSchemaValidationModule,
 	ObSearchBoxModule,
+	ObSelectableModule,
 	ObStickyModule,
-	ObInputClearModule,
 	ObUnknownRouteModule,
 	ObUnsavedChangesModule,
 	ObUnsavedChangesTabsModule
@@ -127,6 +128,7 @@ import {ObSelectableSampleComponent} from './selectable/selectable-sample.compon
 		FormControlStateSampleComponent,
 		FilterBoxSampleComponent,
 		HttpInterceptorSampleComponent,
+		InputClearComponent,
 		PatternFilterPipe,
 		MasterLayoutSampleComponent,
 		MultiselectSampleComponent,
@@ -152,16 +154,8 @@ import {ObSelectableSampleComponent} from './selectable/selectable-sample.compon
 		ObPopUpSampleComponent,
 		MultiTranslateLoaderSampleComponent
 	],
-	exports: [
-		RouterModule,
-		ObApiComponent
-	],
-	providers: [
-		SampleDataResolver
-	],
-	entryComponents: [
-		UnsavedChangesSampleModalComponent
-	]
+	exports: [RouterModule, ObApiComponent],
+	providers: [SampleDataResolver],
+	entryComponents: [UnsavedChangesSampleModalComponent]
 })
-export class SamplesModule {
-}
+export class SamplesModule {}

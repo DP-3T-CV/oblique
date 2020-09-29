@@ -5,6 +5,7 @@
       "name": "ObSelectableDirective",
       "selector": "[obSelectable]",
       "exported": "obSelectable",
+      "type": "directive",
       "since": "5.0.0",
       "inputs": [
         {
@@ -18,6 +19,12 @@
           "text": "Controls if the element is selected or not (for instance during component initialization). Default is <code>false</code>.",
           "type": "boolean",
           "since": "5.0.0"
+        },
+        {
+          "name": "tabindex",
+          "text": "Sets the tab index of the selectable element, default is 0.",
+          "type": "number",
+          "since": "5.1.0"
         },
         {
           "name": "value",

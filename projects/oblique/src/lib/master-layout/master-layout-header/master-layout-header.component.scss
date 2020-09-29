@@ -63,8 +63,9 @@
 	}
 
 	.header {
+		position: relative;
 		display: block;
-		z-index: 1;
+		z-index: 5;
 		width: 100%;
 		padding: 0;
 		background-color: inherit;
@@ -84,15 +85,60 @@
 				height: $header-height-md;
 			}
 		}
+
+		aside {
+			position: absolute;
+			top: 0.5em;
+			font-size: $font-size-bigger;
+			line-height: 1.5;
+			text-align: center;
+			transform: rotate(-45deg);
+			transform-origin: center;
+
+			&::before {
+				content: '';
+				position: absolute;
+				display: block;
+				top: 0;
+				bottom: 0;
+				right: -100%;
+				left: -100%;
+				background-color: inherit;
+				z-index: -1;
+			}
+		}
+	}
+
+	.application-header-action {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-top: $spacing-sm;
+		margin-bottom: $spacing-sm;
+		padding-left: $spacing-default;
+		padding-right: $spacing-default;
+		border-right: 1px solid $gray-lighter;
+
+		&:empty {
+			display: none;
+		}
+
+		@include layout-collapse-down() {
+			float: left;
+			margin-top: 13px;
+			margin-bottom: 13px;
+		}
 	}
 
 	.application-header-title {
+        position: relative;
 		display: flex;
 		flex: 1;
 		flex-direction: row;
 		flex-wrap: nowrap;
 		margin-right: auto; // Ensure controls get pushed to the right
-		min-width: 0; // Important, for text ellipsis of app title (cf. https://css-tricks.com/flexbox-truncated-text/)!
+        min-width: 0; // Important, for text ellipsis of app title (cf. https://css-tricks.com/flexbox-truncated-text/)!
+        overflow: hidden;
 	}
 
 	.application-brand {
@@ -102,7 +148,7 @@
 		align-items: center;
 		min-width: 0; // Important, for text ellipsis of app title (cf. https://css-tricks.com/flexbox-truncated-text/)!
 		padding: 8px $spacing-default;
-		transition: padding $duration-default ease-in-out;
+        transition: padding $duration-default ease-in-out;
 
 		@include layout-collapse-up() {
 			@at-root #{selector-append(":not(.application-header-md)", &)} {
@@ -137,7 +183,7 @@
 		font-size: $font-size-xl;
 		font-weight: 300;
 		padding-left: $spacing-default;
-		border-left: 1px solid $gray-extra-light;
+		border-left: 1px solid $gray-lighter;
 		max-height: $brand-logo-height-collapsed;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -173,6 +219,24 @@
 
 		@include layout-collapse-up() {
 			display: none !important;
+		}
+	}
+
+	.condensed & {
+		&:not(.application-fixed):not(.application-header-sticky) {
+			position: static;
+
+			&::before {
+				content: '';
+				display: block;
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: $brand-line-width;
+				background-color: $brand-accent;
+				z-index: 5;
+			}
 		}
 	}
 }

@@ -1,15 +1,13 @@
 import {TestBed} from '@angular/core/testing';
-
 import {ObPopUpService} from './pop-up.service';
-import {WINDOW} from 'oblique';
-import {windowProvider} from '../utilities';
+import {windowProvider, WINDOW} from '../utilities';
 
 describe('PopUpService', () => {
 	let service: ObPopUpService;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({providers: [{provide: WINDOW, useFactory: windowProvider}]});
-		service = TestBed.get(ObPopUpService);
+		service = TestBed.inject(ObPopUpService);
 	});
 
 	it('should be created', () => {

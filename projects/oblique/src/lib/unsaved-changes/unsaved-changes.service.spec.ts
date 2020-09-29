@@ -1,11 +1,11 @@
 import {inject, TestBed} from '@angular/core/testing';
 import {ControlContainer} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
-import {ObUnsavedChangesService, WINDOW} from 'oblique';
 import {ObPopUpService} from '../pop-up/pop-up.service';
 import {ObMockTranslateService} from '../_mocks/mock-translate.service';
 import {ObMockPopUpModule} from '../pop-up/_mock/mock-pop-up.module';
-import {windowProvider} from '../utilities';
+import {windowProvider, WINDOW} from '../utilities';
+import {ObUnsavedChangesService} from './unsaved-changes.service';
 
 describe('UnsavedChangesService', () => {
 	let unsavedChangesService: ObUnsavedChangesService;
@@ -13,13 +13,9 @@ describe('UnsavedChangesService', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [ObMockPopUpModule],
-			providers: [
-				ObUnsavedChangesService,
-				{provide: TranslateService, useClass: ObMockTranslateService},
-				{provide: WINDOW, useFactory: windowProvider}
-			]
+			providers: [ObUnsavedChangesService, {provide: TranslateService, useClass: ObMockTranslateService}, {provide: WINDOW, useFactory: windowProvider}]
 		});
-		popUpService = TestBed.get(ObPopUpService);
+		popUpService = TestBed.inject(ObPopUpService);
 	});
 
 	beforeEach(() => {
@@ -37,7 +33,7 @@ describe('UnsavedChangesService', () => {
 
 	describe('canDeactivate()', () => {
 		describe('with no watched form', () => {
-			it('shouldn\'t call window.confirm', () => {
+			it("shouldn't call window.confirm", () => {
 				jest.spyOn(popUpService, 'confirm');
 				unsavedChangesService.canDeactivate();
 				expect(popUpService.confirm).not.toHaveBeenCalled();
@@ -54,7 +50,7 @@ describe('UnsavedChangesService', () => {
 				unsavedChangesService.watch('tab_1', form);
 			});
 
-			it('shouldn\'t call window.confirm', () => {
+			it("shouldn't call window.confirm", () => {
 				jest.spyOn(popUpService, 'confirm');
 				unsavedChangesService.canDeactivate();
 				expect(popUpService.confirm).not.toHaveBeenCalled();

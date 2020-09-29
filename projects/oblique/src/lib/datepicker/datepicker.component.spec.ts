@@ -3,11 +3,10 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, NO_ERRORS_SCHEMA} from 
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
-import {ObDatepickerComponent} from 'oblique';
+import {ObDatepickerComponent} from './datepicker.component';
 
 @Component({
-	template: `
-		<ob-date-picker [formControl]="model"></ob-date-picker>`
+	template: ` <ob-date-picker [formControl]="model"></ob-date-picker>`
 })
 class TestComponent {
 	model = new FormControl();
@@ -23,10 +22,7 @@ describe('DatepickerComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [TestComponent, ObDatepickerComponent],
 			imports: [ReactiveFormsModule, NgbDatepickerModule],
-			schemas: [
-				CUSTOM_ELEMENTS_SCHEMA,
-				NO_ERRORS_SCHEMA
-			]
+			schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 		}).compileComponents();
 	}));
 
@@ -51,7 +47,7 @@ describe('DatepickerComponent', () => {
 
 		fixture.detectChanges();
 
-		expect(button.properties['disabled']).toBeTruthy();
+		expect(button.properties.disabled).toBeTruthy();
 	});
 
 	it('should disable the input, if disable gets set to true', () => {
@@ -59,6 +55,6 @@ describe('DatepickerComponent', () => {
 
 		fixture.detectChanges();
 
-		expect(fixture.debugElement.query(By.css('input')).properties['disabled']).toBeTruthy();
+		expect(fixture.debugElement.query(By.css('input')).properties.disabled).toBeTruthy();
 	});
 });

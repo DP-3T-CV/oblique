@@ -1,43 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ObINavigationLink} from './master-layout-navigation/master-layout-navigation.component';
-
-export enum ObEScrollMode {
-	AUTO,
-	ENABLED,
-	DISABLED
-}
-
-interface ObIMasterLayoutHeader {
-	isAnimated: boolean;
-	isSticky: boolean;
-	isMedium: boolean;
-	isCustom: boolean;
-	hasScrollTransitions: boolean;
-}
-interface ObIMasterLayoutFooter {
-	isSmall: boolean;
-	isCustom: boolean;
-	hasScrollTransitions: boolean;
-}
-
-interface ObIMasterLayoutNavigation {
-	isFullWidth: boolean;
-	scrollMode: ObEScrollMode;
-	scrollDelta: number;
-	activeClass: string;
-	links: ObINavigationLink[];
-}
-
-interface ObILocale {
-	locales: (string | ObILocaleObject)[];
-	default: string;
-	disabled: boolean;
-}
-
-export interface ObILocaleObject {
-	locale: string;
-	id?: string;
-}
+import {ObILocale, ObIMasterLayoutHeader, ObIMasterLayoutNavigation, ObEScrollMode, ObIMasterLayoutFooter} from './master-layout.datatypes';
 
 /**
  * Configuration service for the Master Layout component.
@@ -66,8 +28,8 @@ export class ObMasterLayoutConfig {
 	 * Locales of the application
 	 */
 	locale: ObILocale = {
-		locales:  ['de', 'fr', 'it'],
-		default:  'de',
+		locales: ['de', 'fr', 'it'],
+		default: 'de',
 		disabled: false
 	};
 
@@ -90,7 +52,7 @@ export class ObMasterLayoutConfig {
 		isSticky: true,
 		isMedium: false,
 		isCustom: false,
-		hasScrollTransitions: true	// indicates if the header should be resized when scrolling
+		hasScrollTransitions: true // indicates if the header should be resized when scrolling
 	};
 
 	/**
@@ -110,6 +72,6 @@ export class ObMasterLayoutConfig {
 	footer: ObIMasterLayoutFooter = {
 		isSmall: true,
 		isCustom: false,
-		hasScrollTransitions: true	// indicates if the footer should be resized when scrolling
+		hasScrollTransitions: true // indicates if the footer should be resized when scrolling
 	};
 }

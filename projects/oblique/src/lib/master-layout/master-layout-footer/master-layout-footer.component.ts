@@ -2,10 +2,11 @@ import {Component, ContentChildren, HostBinding, QueryList, TemplateRef, ViewEnc
 import {filter, takeUntil} from 'rxjs/operators';
 
 import {ObUnsubscribable} from '../../unsubscribe.class';
-import {ObScrollingEvents} from '../../scrolling/scrolling.module';
 import {ObMasterLayoutService} from '../master-layout.service';
 import {ObMasterLayoutConfig} from '../master-layout.config';
-import {ObIMasterLayoutEvent, ObEMasterLayoutEventValues, scrollEnabled} from '../master-layout.utility';
+import {scrollEnabled} from '../master-layout.utility';
+import {ObEMasterLayoutEventValues, ObIMasterLayoutEvent} from '../master-layout.datatypes';
+import {ObScrollingEvents} from '../../scrolling/scrolling-events';
 
 @Component({
 	selector: 'ob-master-layout-footer',
@@ -34,24 +35,26 @@ export class ObMasterLayoutFooterComponent extends ObUnsubscribable {
 
 	private propertyChanges() {
 		const events = [ObEMasterLayoutEventValues.SMALL, ObEMasterLayoutEventValues.CUSTOM];
-		this.masterLayout.footer.configEvents.pipe(
-			filter((evt: ObIMasterLayoutEvent) => events.includes(evt.name)),
-			takeUntil(this.unsubscribe)
-		).subscribe((event) => {
-			switch (event.name) {
-				case ObEMasterLayoutEventValues.SMALL:
-					this.isSmall = event.value;
-					break;
-				case ObEMasterLayoutEventValues.CUSTOM:
-					this.isCustom = event.value;
-					break;
-			}
-		});
+		this.masterLayout.footer.configEvents
+			.pipe(
+				filter((evt: ObIMasterLayoutEvent) => events.includes(evt.name)),
+				takeUntil(this.unsubscribe)
+			)
+			.subscribe(event => {
+				switch (event.name) {
+					case ObEMasterLayoutEventValues.SMALL:
+						this.isSmall = event.value;
+						break;
+					case ObEMasterLayoutEventValues.CUSTOM:
+						this.isCustom = event.value;
+						break;
+				}
+			});
 	}
 
 	private reduceOnScroll() {
-		this.scrollEvents.isScrolled.pipe(takeUntil(this.unsubscribe), scrollEnabled(this.masterLayout.footer))
-			.subscribe((isScrolling) => this.masterLayout.footer.isSmall = !isScrolling);
+		this.scrollEvents.isScrolled
+			.pipe(takeUntil(this.unsubscribe), scrollEnabled(this.masterLayout.footer))
+			.subscribe(isScrolling => (this.masterLayout.footer.isSmall = !isScrolling));
 	}
 }
-

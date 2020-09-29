@@ -1,9 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {By} from '@angular/platform-browser';
-import {ObNavigableDirective, ObNavigableGroupComponent} from 'oblique';
 import {NavigableSampleComponent} from './navigable-sample.component';
-import {ObliqueTestingModule} from 'oblique';
+import {ObNavigableGroupComponent} from 'projects/oblique/src/lib/navigable/navigable-group.component';
+import {ObNavigableDirective} from 'projects/oblique/src/lib/navigable/navigable.directive';
+import {ObliqueTestingModule} from 'projects/oblique/src/lib/oblique-testing.module';
 
 describe('NavigableSampleComponent', () => {
 	let component: NavigableSampleComponent;
@@ -14,12 +15,8 @@ describe('NavigableSampleComponent', () => {
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
 			imports: [ObliqueTestingModule],
-			declarations: [
-				NavigableSampleComponent,
-			],
-			schemas: [
-				CUSTOM_ELEMENTS_SCHEMA
-			]
+			declarations: [NavigableSampleComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA]
 		}).compileComponents();
 	}));
 

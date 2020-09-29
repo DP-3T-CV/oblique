@@ -4,9 +4,9 @@ import {ControlContainer} from '@angular/forms';
 import {NgbTabChangeEvent, NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import {ObMockTranslateService} from '../_mocks/mock-translate.service';
-import {ObUnsavedChangesService} from 'oblique';
 import {ObMockUnsavedChangesService} from '../unsaved-changes/mock/mock-unsaved-changes.service';
 import {ObUnsavedChangesTabsService} from './unsaved-changes-tabs.service';
+import {ObUnsavedChangesService} from '../unsaved-changes/unsaved-changes.service';
 
 describe('UnsavedChangesTabsService', () => {
 	let unsavedChangesService: ObUnsavedChangesService;
@@ -19,8 +19,8 @@ describe('UnsavedChangesTabsService', () => {
 				{provide: TranslateService, useClass: ObMockTranslateService}
 			]
 		});
-		unsavedChangesService = TestBed.get(ObUnsavedChangesService);
-		unsavedChangesTabService = TestBed.get(ObUnsavedChangesTabsService);
+		unsavedChangesService = TestBed.inject(ObUnsavedChangesService);
+		unsavedChangesTabService = TestBed.inject(ObUnsavedChangesTabsService);
 	});
 
 	describe('listenTo()', () => {
@@ -38,7 +38,7 @@ describe('UnsavedChangesTabsService', () => {
 			};
 			tabSet = {
 				tabs: {first: {id: 'tab_1'}, last: {id: 'tab_2'}, length: 2},
-				select: (id) => {
+				select: id => {
 					evt.nextId = id;
 					evtEmitter.emit(evt);
 				},
@@ -53,7 +53,7 @@ describe('UnsavedChangesTabsService', () => {
 				tabSet.select('tab_2');
 			});
 
-			it('shouldn\'t call unsavedChangesService.watch', () => {
+			it("shouldn't call unsavedChangesService.watch", () => {
 				expect(unsavedChangesService.watch).not.toHaveBeenCalled();
 			});
 
@@ -61,7 +61,7 @@ describe('UnsavedChangesTabsService', () => {
 				expect(unsavedChangesService.ignoreChanges).toHaveBeenCalledWith(['tab_1']);
 			});
 
-			it('should\'t prevent default', () => {
+			it("should't prevent default", () => {
 				expect(evt.preventDefault).not.toHaveBeenCalled();
 			});
 		});
@@ -82,7 +82,7 @@ describe('UnsavedChangesTabsService', () => {
 				expect(unsavedChangesService.ignoreChanges).toHaveBeenCalledWith(['tab_1']);
 			});
 
-			it('should\'t prevent default', () => {
+			it("should't prevent default", () => {
 				expect(evt.preventDefault).not.toHaveBeenCalled();
 			});
 		});
@@ -121,11 +121,11 @@ describe('UnsavedChangesTabsService', () => {
 				expect(unsavedChangesService.watch).toHaveBeenCalled();
 			});
 
-			it('shouldn\'t call unsavedChangesService.ignoreChanges', () => {
+			it("shouldn't call unsavedChangesService.ignoreChanges", () => {
 				expect(unsavedChangesService.ignoreChanges).not.toHaveBeenCalled();
 			});
 
-			it('shouldn\'t prevent default', () => {
+			it("shouldn't prevent default", () => {
 				expect(evt.preventDefault).not.toHaveBeenCalled();
 			});
 		});

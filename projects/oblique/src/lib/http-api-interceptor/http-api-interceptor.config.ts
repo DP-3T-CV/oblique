@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ObENotificationType} from '../notification/notification.module';
+import {ObENotificationType} from '../notification/notification.interfaces';
 
 // TODO: make sure that app.module.ts provides an instance of HttpApiInterceptorConfig filled with data from environment[.prod].ts
 
@@ -17,7 +17,6 @@ export class ObHttpApiInterceptorConfig {
 	 * Configuration for application API.
 	 */
 	api = {
-
 		/**
 		 * Default application API URL for matching API calls.
 		 */

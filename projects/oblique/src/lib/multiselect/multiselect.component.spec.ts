@@ -3,8 +3,10 @@ import {NO_ERRORS_SCHEMA, Pipe, PipeTransform} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 
-import {ObMultiselectComponent, ObMultiselectConfig, ObMultiselectTexts} from 'oblique';
 import {ObMockTranslatePipe} from '../_mocks/mock-translate.pipe';
+import {ObMultiselectComponent} from './multiselect.component';
+import {ObMultiselectConfig} from './multiselect.config';
+import {ObMultiselectTexts} from './multiselect.texts';
 
 @Pipe({
 	name: 'searchFilter'
@@ -23,24 +25,13 @@ describe('MultiselectComponent', () => {
 	const stringOption2 = 'bar';
 	const stringOption3 = 'baz';
 
-	const stringOptions = [
-		stringOption1,
-		stringOption2,
-		stringOption3
-	];
+	const stringOptions = [stringOption1, stringOption2, stringOption3];
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [
-				ObMultiselectComponent,
-				MockSearchPipe,
-				ObMockTranslatePipe
-			],
+			declarations: [ObMultiselectComponent, MockSearchPipe, ObMockTranslatePipe],
 			imports: [FormsModule],
-			providers: [
-				ObMultiselectConfig,
-				ObMultiselectTexts
-			],
+			providers: [ObMultiselectConfig, ObMultiselectTexts],
 			schemas: [NO_ERRORS_SCHEMA]
 		}).compileComponents();
 	}));
@@ -87,7 +78,7 @@ describe('MultiselectComponent', () => {
 			expect(component.formatOptionForLabel(modelOption)).toEqual(modelOption.name);
 		});
 
-		it('should use labelFormatter if it\'s set', () => {
+		it("should use labelFormatter if it's set", () => {
 			const formatterReturnValue = 'FuuBar';
 
 			component.labelFormatter = jest.fn().mockImplementation(() => formatterReturnValue);
@@ -117,14 +108,14 @@ describe('MultiselectComponent', () => {
 			expect(component.toggleSelection).toHaveBeenCalledWith(stringOption1);
 		});
 
-		it('should add option to model, if it isn\'t already selected', () => {
+		it("should add option to model, if it isn't already selected", () => {
 			component.toggleSelection(stringOption1);
 
 			expect(component.model.length).toBe(1);
 			expect(component.model).toContain(stringOption1);
 		});
 
-		it('should emit onAdded, if option isn\'t already selected', () => {
+		it("should emit onAdded, if option isn't already selected", () => {
 			spyOn(component.onAdded, 'emit');
 
 			component.toggleSelection(stringOption1);
@@ -132,7 +123,7 @@ describe('MultiselectComponent', () => {
 			expect(component.onAdded.emit).toHaveBeenCalledWith(stringOption1);
 		});
 
-		it('should remove option from model, if it\'s already selected', () => {
+		it("should remove option from model, if it's already selected", () => {
 			component.model.push(stringOption1);
 
 			component.toggleSelection(stringOption1);
@@ -151,7 +142,6 @@ describe('MultiselectComponent', () => {
 		});
 
 		describe('with selectionLimit set', () => {
-
 			beforeEach(() => {
 				component.selectionLimit = 2;
 				component.model.push(stringOption1);
@@ -166,7 +156,7 @@ describe('MultiselectComponent', () => {
 				expect(component.selectionLimitReached.emit).toHaveBeenCalled();
 			});
 
-			it('shouldn\'t add item to model, if there are already enough selected options', () => {
+			it("shouldn't add item to model, if there are already enough selected options", () => {
 				spyOn(component.selectionLimitReached, 'emit');
 
 				component.toggleSelection(stringOption3);
@@ -275,7 +265,7 @@ describe('MultiselectComponent', () => {
 			component.checkAll();
 
 			expect(component.model.length).toBe(component.options.length);
-			component.options.forEach((option) => {
+			component.options.forEach(option => {
 				expect(component.model).toContain(option);
 			});
 		});

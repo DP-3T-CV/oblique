@@ -2,15 +2,17 @@ import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/t
 import {FormsModule} from '@angular/forms';
 import {Component, ViewChild} from '@angular/core';
 import {By} from '@angular/platform-browser';
-import {ObErrorMessagesComponent, ObErrorMessagesService, ObFormControlStateDirective} from 'oblique';
 import {ObMockTranslateParamsModule} from '../translate-params/mock/mock-translate-params.module';
+import {ObErrorMessagesComponent} from './error-messages.component';
+import {ObErrorMessagesService} from './error-messages.service';
+import {ObFormControlStateDirective} from '../form-control-state/form-control-state.directive';
 
 @Component({
 	template: `
 		<form name="testForm">
-			<input name="name" type="text" ngModel #name="ngModel" required>
+			<input name="name" type="text" ngModel #name="ngModel" required />
 			<ob-error-messages [control]="name"></ob-error-messages>
-			<input id="submit" type="submit" value="Click Me">
+			<input id="submit" type="submit" value="Click Me" />
 		</form>
 	`
 })
@@ -33,16 +35,12 @@ describe('ErrorMessagesComponent', () => {
 	});
 
 	beforeEach(async(() => {
-
 		errorMessagesServiceMock = {
 			createMessages: jest.fn().mockImplementation(() => [{key: 'i18n.validation.bar', params: undefined}])
 		};
 
 		TestBed.configureTestingModule({
-			declarations: [
-				ObErrorMessagesComponent,
-				TestComponent
-			],
+			declarations: [ObErrorMessagesComponent, TestComponent],
 			imports: [FormsModule, ObMockTranslateParamsModule],
 			providers: [
 				{provide: ObErrorMessagesService, useValue: errorMessagesServiceMock},
@@ -71,7 +69,6 @@ describe('ErrorMessagesComponent', () => {
 	}));
 
 	describe('with FormControlStateDirective.pristineValidation = true', () => {
-
 		beforeAll(() => {
 			formControlStateDirectiveMock.pristineValidation = true;
 		});

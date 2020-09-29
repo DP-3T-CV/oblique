@@ -4,6 +4,7 @@
     {
       "name": "ObHttpApiInterceptorConfig",
       "usage": "Should by injected, typically in the AppModule, to customize the values of its properties in order to provide alternate default values for the <code>HttpApiInterceptor</code>.",
+      "type": "injectable(config)",
       "since": "3.0.0",
       "variables": [
         {
@@ -36,22 +37,22 @@
             "info",
             "success"
           ],
-          "type": "NotificationType",
-          "default": "error",
+          "type": "ObENotificationType",
+          "default": "<code>error</code> (inferred from <code>ObENotificationType.ERROR</code>)",
           "since": "3.0.0"
         },
         {
           "name": "api.notification.title",
           "text": "Defines the notification's text.",
           "type": "string",
-          "default": "error.statusText.<error.status>",
+          "default": "error.statusText",
           "since": "3.0.0"
         },
         {
           "name": "api.notification.text",
           "text": "Defines the notification's title.",
           "type": "string",
-          "default": "i18n.error.http.status.<error.status>",
+          "default": "i18n.oblique.http.error.status.<error.status>",
           "since": "3.0.0"
         },
         {
@@ -64,13 +65,14 @@
       ]
     },
     {
-      "name": "HttpApiInterceptorEvents",
+      "name": "ObHttpApiInterceptorEvents",
+      "type": "injectable(event)",
       "since": "3.0.0",
       "variables": [
         {
           "name": "requestIntercepted",
           "text": "This observable emits events before the request is sent to the server and can be used to tweak the behavior of the interceptor.",
-          "type": "Observable<HttpApiRequest>",
+          "type": "Observable<ObIHttpApiRequest>",
           "since": "3.0.0"
         },
         {
@@ -104,6 +106,51 @@
             "number = 1"
           ],
           "since": "4.1.0"
+        }
+      ]
+    },
+    {
+      "name": "ObIHttpApiRequest",
+      "type": "interface",
+      "usage": "The behavior of the Http interceptor",
+      "since": "3.0.0",
+      "variables": [
+        {
+          "name": "notification.active",
+          "text": "Is the notification active",
+          "type": "boolean",
+          "since": "3.0.0"
+        },
+        {
+          "name": "notification.severity",
+          "text": "The severity of notification",
+          "type": "ObENotificationType",
+          "values": ["ObENotificationType.INFO", "ObENotificationType.SUCCESS", "ObENotificationType.WARNING", "ObENotificationType.ERROR"],
+          "since": "3.0.0"
+        },
+        {
+          "name": "notification.title",
+          "text": "Title text of the notification",
+          "type": "string",
+          "since": "3.0.0"
+        },
+        {
+          "name": "notification.text",
+          "text": "Message text of the notification",
+          "type": "string",
+          "since": "3.0.0"
+        },
+        {
+          "name": "notification.sticky",
+          "text": "Is the notification sticky (does not automatically close)",
+          "type": "boolean",
+          "since": "3.0.0"
+        },
+        {
+          "name": "spinner",
+          "text": "Is spinner active",
+          "type": "boolean",
+          "since": "3.0.0"
         }
       ]
     }

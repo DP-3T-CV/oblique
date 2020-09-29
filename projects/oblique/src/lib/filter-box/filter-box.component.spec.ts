@@ -1,9 +1,10 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {By} from '@angular/platform-browser';
-import {ObFilterBoxComponent, THEMES, ObThemeService} from 'oblique';
 import {ObMockTranslatePipe} from '../_mocks/mock-translate.pipe';
 import {ObMockThemeService} from '../theme/mock/mock-theme.service';
+import {ObThemeService, THEMES} from '../theme/theme.service';
+import {ObFilterBoxComponent} from './filter-box.component';
 
 @Component({
 	template: `
@@ -13,8 +14,7 @@ import {ObMockThemeService} from '../theme/mock/mock-theme.service';
 		</ob-filter-box>
 	`
 })
-class TestComponent {
-}
+class TestComponent {}
 
 describe('FilterBox', () => {
 	let component: TestComponent;
@@ -22,11 +22,7 @@ describe('FilterBox', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [
-				TestComponent,
-				ObFilterBoxComponent,
-				ObMockTranslatePipe
-			],
+			declarations: [TestComponent, ObFilterBoxComponent, ObMockTranslatePipe],
 			schemas: [NO_ERRORS_SCHEMA],
 			providers: [{provide: ObThemeService, useClass: ObMockThemeService}]
 		}).compileComponents();
@@ -44,7 +40,7 @@ describe('FilterBox', () => {
 
 	describe('with Bootstrap theme', () => {
 		beforeEach(() => {
-			(TestBed.get(ObThemeService) as ObThemeService).setTheme(THEMES.BOOTSTRAP);
+			(TestBed.inject(ObThemeService) as ObThemeService).setTheme(THEMES.BOOTSTRAP);
 			fixture.detectChanges();
 		});
 

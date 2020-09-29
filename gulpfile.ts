@@ -1,3 +1,4 @@
+/* eslint-disable */
 delete require.cache[require.resolve('./package.json')];
 const fs = require('fs'),
 	gulp = require('gulp'),
@@ -52,7 +53,7 @@ const distMeta = () => {
 
 	['version', 'description', 'keywords', 'author', 'contributors', 'homepage', 'repository', 'license', 'bugs', 'publishConfig']
 		.forEach(field => output[field] = pkg[field]);
-	['main', 'module', 'es2015', 'esm5', 'esm2015', 'fesm5', 'fesm2015', 'typings']
+	['main', 'module', 'es2015', 'esm5', 'esm2015', 'fesm5', 'fesm2015', 'typings', 'metadata']
 		.forEach(field => output[field] = output[field].replace('oblique-oblique', 'oblique'));
 
 	return gulp.src(['README.md', 'CHANGELOG.md', 'LICENSE'])
@@ -70,6 +71,10 @@ const distFonts = () => gulp.src(['./node_modules/@fortawesome/fontawesome-free/
 
 const distFontAwesome = () => gulp.src('./node_modules/@fortawesome/fontawesome-free/scss/*')
 	.pipe(gulp.dest(`${paths.dist}/styles/scss/fontawesome`));
+
+const distBundles = () => gulp.src([`${paths.dist}/bundles/*.js`, `${paths.dist}/fesm5/*.js`, `${paths.dist}/fesm2015/*.js`])
+	.pipe(replace('oblique-oblique', 'oblique'))
+	.pipe(gulp.dest(file => file.base));
 
 const distScss = () => gulp.src(`${paths.dist}/styles/scss/**/*.scss`)
 	.pipe(replace(`${paths.fa}/webfonts`, `${paths.oblique}/fonts`))
@@ -93,13 +98,27 @@ const distRename = () => gulp.src(`${paths.dist}/**/oblique-oblique*`)
 
 const clean = () => del(`${paths.dist}/**/oblique-oblique*`);
 
+const telemetryPre = () => gulp.src(`${paths.src}/lib/telemetry/telemetry.service.ts`)
+	.pipe(replace('require(\'package.json\')', '\'_REQUIRE_PLACEHOLDER_\''))
+	.pipe(gulp.dest(`${paths.src}/lib/telemetry`));
+
+const telemetryPost = () => gulp.src(`${paths.src}/lib/telemetry/telemetry.service.ts`)
+	.pipe(replace('\'_REQUIRE_PLACEHOLDER_\'', 'require(\'package.json\')'))
+	.pipe(gulp.dest(`${paths.src}/lib/telemetry`));
+
+const telemetryPostLib = () => gulp.src(`${paths.dist}/**/*.js`)
+	.pipe(replace('\'_REQUIRE_PLACEHOLDER_\'', 'require(\'package.json\')'))
+	.pipe(gulp.dest(paths.dist));
+
 gulp.task(
 	'dist',
 	gulp.parallel(
+		telemetryPost,
 		distMeta,
 		distFonts,
 		distDocs,
 		distFontAwesome,
+		distBundles,
 		gulp.series(
 			distStyles,
 			distStylesThemeRename,
@@ -115,6 +134,7 @@ gulp.task(
 			distScss,
 			distCss,
 			distRename,
+			telemetryPostLib,
 			gulp.parallel(
 				addBanner,
 				distMap
@@ -124,6 +144,8 @@ gulp.task(
 		)
 	)
 );
+
+gulp.task('pre-dist', telemetryPre);
 
 gulp.task(
 	'publish',

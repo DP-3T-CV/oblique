@@ -1,4 +1,4 @@
-import {ObTelemetryMessage} from './telemetry-message';
+import {ObITelemetryMessage} from './telemetry-message';
 import {TestBed} from '@angular/core/testing';
 import {ObTelemetryService} from './telemetry.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
@@ -14,8 +14,8 @@ describe('TelemetryService', () => {
 			providers: [{provide: WINDOW, useFactory: windowProvider}]
 		});
 
-		service = TestBed.get(ObTelemetryService);
-		httpMock = TestBed.get(HttpTestingController);
+		service = TestBed.inject(ObTelemetryService);
+		httpMock = TestBed.inject(HttpTestingController);
 	});
 
 	it('should be created', () => {
@@ -23,52 +23,60 @@ describe('TelemetryService', () => {
 	});
 
 	it('should store telemetry messages', () => {
-		const message: ObTelemetryMessage = {
+		const message: ObITelemetryMessage = {
 			obliqueModuleName: 'testmodule',
 			obliqueVersion: 'testversion',
 			applicationName: 'testapplication',
 			applicationVersion: 'testappversion'
 		};
 
-		service['storeMessage'](message);
+		// @ts-ignore
+		service.storeMessage(message);
 
-		expect(service['telemetryRecords'].length).toBe(1);
+		// @ts-ignore
+		expect(service.telemetryRecords.length).toBe(1);
 	});
 
 	it('should not store equal messages multiple times', () => {
-		const message1: ObTelemetryMessage = {
+		const message1: ObITelemetryMessage = {
 			obliqueModuleName: 'testmodule',
 			obliqueVersion: 'testversion',
 			applicationName: 'testapplication',
 			applicationVersion: 'testappversion'
 		};
 
-		const message2: ObTelemetryMessage = {
+		const message2: ObITelemetryMessage = {
 			obliqueModuleName: 'testmodule',
 			obliqueVersion: 'testversion',
 			applicationName: 'testapplication',
 			applicationVersion: 'testappversion'
 		};
 
-		service['storeMessage'](message1);
-		service['storeMessage'](message2);
+		// @ts-ignore
+		service.storeMessage(message1);
+		// @ts-ignore
+		service.storeMessage(message2);
 
-		expect(service['telemetryRecords'].length).toBe(1);
+		// @ts-ignore
+		expect(service.telemetryRecords.length).toBe(1);
 	});
 
 	it('should send the stored messages correctly', () => {
-		const message: ObTelemetryMessage = {
+		const message: ObITelemetryMessage = {
 			obliqueModuleName: 'testmodule',
 			obliqueVersion: 'testversion',
 			applicationName: 'testapplication',
 			applicationVersion: 'testappversion'
 		};
 
-		service['storeMessage'](message);
+		// @ts-ignore
+		service.storeMessage(message);
 
-		service['sendMessages']();
+		// @ts-ignore
+		service.sendMessages();
 
-		const mockReq = httpMock.expectOne(service['TELEMETRY_URL']);
+		// @ts-ignore
+		const mockReq = httpMock.expectOne(service.TELEMETRY_URL);
 
 		expect(mockReq.cancelled).toBeFalsy();
 		expect(mockReq.request.method).toEqual('POST');

@@ -5,7 +5,9 @@ export interface ObIAPI {
 	selector?: string;
 	exported?: string;
 	usage?: string;
+	type?: string;
 	since: string;
+	updated?: string;
 	variables?: ObIAPIelement[];
 	inputs?: ObIAPIelement[];
 	outputs?: ObIAPIelement[];
@@ -25,6 +27,8 @@ export interface ObIAPIelement {
 	see?: string;
 	default?: any;
 	since: string;
+	updated?: string;
+	isOptional?: boolean;
 }
 
 @Component({

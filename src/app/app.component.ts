@@ -7,9 +7,13 @@ import {Observable} from 'rxjs';
 	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'app-root',
 	templateUrl: './app.component.html',
-	styles: [`.fa-sign-in-alt {
-        transition: transform 600ms;
-    }`]
+	styles: [
+		`
+			.fa-sign-in-alt {
+				transition: transform 600ms;
+			}
+		`
+	]
 })
 export class AppComponent {
 	offCanvasOpen = false;
@@ -18,7 +22,9 @@ export class AppComponent {
 	navigation: ObINavigationLink[] = [
 		{url: 'home', label: 'i18n.routes.home.title'},
 		{
-			url: 'samples', label: 'i18n.routes.samples.title', children: [
+			url: 'samples',
+			label: 'i18n.routes.samples.title',
+			children: [
 				{url: 'collapse', label: 'Collapse'},
 				{url: 'column-layout', label: 'i18n.routes.samples.column-layout.title'},
 				{url: 'datepicker', label: 'i18n.routes.samples.datepicker.title'},
@@ -26,6 +32,7 @@ export class AppComponent {
 				{url: 'filter-box', label: 'i18n.routes.samples.filter-box.title'},
 				{url: 'form-control-state', label: 'i18n.routes.samples.form-control-state.title'},
 				{url: 'http-interceptor', label: 'i18n.routes.samples.http-interceptor.title'},
+				{url: 'input-clear', label: 'Input clear'},
 				{url: 'master-layout', label: 'i18n.routes.samples.master-layout.title'},
 				{url: 'multi-translate-loader', label: 'Multi translate loader'},
 				{url: 'multiselect', label: 'i18n.routes.samples.multiselect.title'},
@@ -36,7 +43,7 @@ export class AppComponent {
 				{url: 'number-format', label: 'i18n.routes.samples.number-format.title'},
 				{url: 'pop-up', label: 'Pop-up'},
 				{url: 'schema-validation', label: 'i18n.routes.samples.schema-validation.title'},
-				{url: 'selectable', 'label': 'Selectable'},
+				{url: 'selectable', label: 'Selectable'},
 				{url: 'sticky', label: 'Sticky'},
 				{url: 'unknown-route-sample', label: 'Unknown route'},
 				{url: 'unsaved-changes', label: 'Unsaved changes'},
@@ -45,7 +52,9 @@ export class AppComponent {
 			]
 		},
 		{
-			url: 'styles', label: 'Styles', children: [
+			url: 'styles',
+			label: 'Styles',
+			children: [
 				{url: 'typography', label: 'Typography'},
 				{url: 'block', label: 'Block elements'},
 				{url: 'inline', label: 'Inline elements'},
@@ -58,13 +67,17 @@ export class AppComponent {
 			]
 		},
 		{
-			url: 'bootstrap', label: 'Bootstrap', children: [
+			url: 'bootstrap',
+			label: 'Bootstrap',
+			children: [
 				{url: 'list-group', label: 'List group'},
 				{url: 'tabs', label: 'Tabs'}
 			]
 		},
 		{
-			url: 'material', label: 'Material', children: [
+			url: 'material',
+			label: 'Material',
+			children: [
 				{url: 'badge', label: 'Badge'},
 				{url: 'card', label: 'Card'},
 				{url: 'chips', label: 'Chips'},
@@ -84,7 +97,7 @@ export class AppComponent {
 
 	constructor(private readonly theme: ObThemeService) {
 		this.populateSearchItems(this.navigation);
-		this.theme$ = this.theme.theme$.pipe(map(() => theme.isMaterial() ? 'material' : 'bootstrap'));
+		this.theme$ = this.theme.theme$.pipe(map(() => (theme.isMaterial() ? 'material' : 'bootstrap')));
 		this.font$ = this.theme.font$;
 	}
 

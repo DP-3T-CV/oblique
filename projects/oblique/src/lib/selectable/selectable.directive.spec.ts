@@ -1,25 +1,22 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {By} from '@angular/platform-browser';
-import {ObSelectableDirective} from 'oblique';
+import {ObSelectableDirective} from './selectable.directive';
 
 @Component({
 	template: '<div class="test-card-0" obSelectable [value]="\'test-card-0\'"></div>'
 })
-class TestValueComponent {
-}
+class TestValueComponent {}
 
 @Component({
 	template: '<div class="test-card-1" obSelectable [collection]="\'A\'"></div>'
 })
-class TestCollectionAComponent {
-}
+class TestCollectionAComponent {}
 
 @Component({
 	template: '<div class="test-card-2" obSelectable [selected]="true"></div>'
 })
-class TesttSelectedComponent {
-}
+class TesttSelectedComponent {}
 
 describe('SelectableDirective', () => {
 	let directive: ObSelectableDirective;
@@ -28,12 +25,7 @@ describe('SelectableDirective', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [
-				TestValueComponent,
-				TestCollectionAComponent,
-				TesttSelectedComponent,
-				ObSelectableDirective
-			]
+			declarations: [TestValueComponent, TestCollectionAComponent, TesttSelectedComponent, ObSelectableDirective]
 		});
 	}));
 
@@ -69,7 +61,8 @@ describe('SelectableDirective', () => {
 		});
 
 		it('should toggle selectable onClick', () => {
-			const spy = spyOn(directive['selectableService'], 'toggleValue').and.callThrough();
+			// @ts-ignore
+			const spy = spyOn(directive.selectableService, 'toggleValue').and.callThrough();
 			expect(spy).not.toHaveBeenCalled();
 			directive.onClick();
 			expect(spy).toHaveBeenCalled();
@@ -112,7 +105,8 @@ describe('SelectableDirective', () => {
 		});
 
 		it('should toggle selectable onClick', () => {
-			const spy = spyOn(directive['selectableService'], 'toggleValue').and.callThrough();
+			// @ts-ignore
+			const spy = spyOn(directive.selectableService, 'toggleValue').and.callThrough();
 			expect(spy).not.toHaveBeenCalled();
 			directive.onClick();
 			expect(spy).toHaveBeenCalled();
@@ -154,7 +148,8 @@ describe('SelectableDirective', () => {
 		});
 
 		it('should toggle selectable onClick', () => {
-			const spy = spyOn(directive['selectableService'], 'toggleValue').and.callThrough();
+			// @ts-ignore
+			const spy = spyOn(directive.selectableService, 'toggleValue').and.callThrough();
 			expect(spy).not.toHaveBeenCalled();
 			directive.onClick();
 			expect(spy).toHaveBeenCalled();

@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, QueryList, TemplateRef} from '@angular/core';
-import {ObILocaleObject} from '../master-layout.config';
 import {ObINavigationLink} from '../master-layout.module';
+import {ObILocaleObject} from '../master-layout.datatypes';
 
 @Component({
 	selector: 'ob-master-layout-header',
@@ -18,13 +18,11 @@ export class ObMockMasterLayoutHeaderComponent {
 	readonly templates: QueryList<TemplateRef<any>>;
 	readonly headerControl: QueryList<ElementRef>;
 
-	onResize(): void {
-	}
+	onResize(): void {}
 
 	isLangActive(lang: string): boolean {
 		return true;
 	}
 
-	changeLang(lang: string): void {
-	}
+	changeLang(lang: string): void {}
 }

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 
 import {ObMasterLayoutConfig} from '../master-layout.config';
-import {ObIMasterLayoutEvent, ObEMasterLayoutEventValues} from '../master-layout.utility';
+import {ObIMasterLayoutEvent, ObEMasterLayoutEventValues} from '../master-layout.datatypes';
 
 @Injectable({
 	providedIn: 'root'
@@ -17,8 +17,7 @@ export class ObMasterLayoutComponentService {
 	private _hasMainNavigation = this.config.layout.hasMainNavigation;
 	private _hasLayout = this.config.layout.hasLayout;
 
-	constructor(private readonly config: ObMasterLayoutConfig) {
-	}
+	constructor(private readonly config: ObMasterLayoutConfig) {}
 
 	get configEvents(): Observable<ObIMasterLayoutEvent> {
 		return this.eventsS;

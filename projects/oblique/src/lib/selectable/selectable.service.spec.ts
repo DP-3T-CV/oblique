@@ -1,6 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {ObSelectableService} from 'oblique';
-import {ObISelectableCollectionChanged} from './selectable.service';
+import {ObISelectableCollectionChanged, ObSelectableService} from './selectable.service';
 
 describe('SelectedService', () => {
 	let selectableService: ObSelectableService;
@@ -8,11 +7,9 @@ describe('SelectedService', () => {
 	beforeEach(async () => {
 		TestBed.configureTestingModule({
 			imports: [],
-			providers: [
-				ObSelectableService
-			]
+			providers: [ObSelectableService]
 		});
-		selectableService = TestBed.get(ObSelectableService);
+		selectableService = TestBed.inject(ObSelectableService);
 	});
 
 	it('should be created', () => {
@@ -20,7 +17,8 @@ describe('SelectedService', () => {
 	});
 
 	it('should have no collections after initialzation', () => {
-		expect(selectableService['collections']).not.toBeUndefined();
+		// @ts-ignore
+		expect(selectableService.collections).not.toBeUndefined();
 		expect(selectableService.getCollections().size).toBe(0);
 	});
 
@@ -185,10 +183,9 @@ describe('SelectedService', () => {
 		expect(selectableService.getCollections().size).toBe(1);
 		selectableService.clearCollections();
 		expect(selectableService.getCollections().size).toBe(0);
-
 	});
 
-	it('should emit CREATE when collections is created', (done) => {
+	it('should emit CREATE when collections is created', done => {
 		selectableService.collectionChange$.subscribe((wrapper: ObISelectableCollectionChanged) => {
 			expect(wrapper.collection).toBe('meteorolgy');
 			expect(wrapper.value[0]).toBe('weather');
@@ -198,7 +195,7 @@ describe('SelectedService', () => {
 		selectableService.addValue('weather', 'meteorolgy');
 	});
 
-	it('should emit UPDATE when values being added', (done) => {
+	it('should emit UPDATE when values being added', done => {
 		selectableService.addValue('weather', 'meteorolgy');
 		selectableService.addValue('rain', 'meteorolgy');
 		selectableService.collectionChange$.subscribe((wrapper: ObISelectableCollectionChanged) => {
@@ -210,7 +207,7 @@ describe('SelectedService', () => {
 		selectableService.addValue('sun', 'meteorolgy');
 	});
 
-	it('should emit UPDATE when collections changes', (done) => {
+	it('should emit UPDATE when collections changes', done => {
 		selectableService.addValue('weather', 'meteorolgy');
 		selectableService.addValue('rain', 'meteorolgy');
 		selectableService.collectionChange$.subscribe((wrapper: ObISelectableCollectionChanged) => {
@@ -222,7 +219,7 @@ describe('SelectedService', () => {
 		selectableService.removeValue('rain', 'meteorolgy');
 	});
 
-	it('should emit DESTROY when collections is being destroyed', (done) => {
+	it('should emit DESTROY when collections is being destroyed', done => {
 		selectableService.addValue('star', 'astronomy');
 		selectableService.addValue('earth', 'astronomy');
 		selectableService.collectionChange$.subscribe((wrapper: ObISelectableCollectionChanged) => {

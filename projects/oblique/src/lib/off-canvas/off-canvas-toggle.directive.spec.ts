@@ -1,5 +1,6 @@
-import {ObOffCanvasService, ObOffCanvasToggleDirective} from 'oblique';
 import {async, TestBed} from '@angular/core/testing';
+import {ObOffCanvasToggleDirective} from './off-canvas-toggle.directive';
+import {ObOffCanvasService} from './off-canvas.service';
 
 describe('OffcanvasToggleDirective', () => {
 	let offCanvasService;
@@ -8,16 +9,13 @@ describe('OffcanvasToggleDirective', () => {
 		offCanvasService = jest.fn();
 		TestBed.configureTestingModule({
 			declarations: [ObOffCanvasToggleDirective],
-			providers: [
-				{provide: ObOffCanvasService, useValue: offCanvasService}
-			]
-		})
-			.compileComponents();
+			providers: [{provide: ObOffCanvasService, useValue: offCanvasService}]
+		}).compileComponents();
 	}));
 
 	it('should create an instance', () => {
 		const mockService = jest.fn();
-		const directive = new ObOffCanvasToggleDirective(mockService as unknown as ObOffCanvasService);
+		const directive = new ObOffCanvasToggleDirective((mockService as unknown) as ObOffCanvasService);
 		expect(directive).toBeTruthy();
 	});
 });

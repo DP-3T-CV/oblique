@@ -1,21 +1,23 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {Component, DebugElement} from '@angular/core';
 import {By} from '@angular/platform-browser';
-import {ObNavigableDirective, ObNavigableOnChangeEvent, ObNavigableOnMoveEvent} from 'oblique';
+import {ObNavigableOnChangeEvent, ObNavigableDirective} from './navigable.directive';
+import {ObNavigableOnMoveEvent} from 'oblique/lib/navigable/navigable.directive';
 
 @Component({
-	template: `
-		<div [obNavigable]="model"
-			 [navigableActivate]="activate"
-			 [navigableHighlight]="highlighted"
-			 [navigableFocusOnInit]="focusOnInit"
-			 (navigableOnActivation)="onActivation()"
-			 (navigableOnChange)="onChange($event)"
-			 (navigableOnFocus)="onFocus($event)"
-			 (navigableOnMouseDown)="onMouseDown()"
-			 (navigableOnMove)="onMove($event)">
-			<button tabindex="0">Click Me!</button>
-		</div>`
+	template: ` <div
+		[obNavigable]="model"
+		[navigableActivate]="activate"
+		[navigableHighlight]="highlighted"
+		[navigableFocusOnInit]="focusOnInit"
+		(navigableOnActivation)="onActivation()"
+		(navigableOnChange)="onChange($event)"
+		(navigableOnFocus)="onFocus($event)"
+		(navigableOnMouseDown)="onMouseDown()"
+		(navigableOnMove)="onMove($event)"
+	>
+		<button tabindex="0">Click Me!</button>
+	</div>`
 })
 class TestComponent {
 	model = {};
@@ -54,7 +56,7 @@ describe('NavigableDirective', () => {
 	//TODO: async not working
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [TestComponent, ObNavigableDirective],
+			declarations: [TestComponent, ObNavigableDirective]
 		}).compileComponents();
 	}));
 
@@ -72,7 +74,7 @@ describe('NavigableDirective', () => {
 	});
 
 	it('should add `.navigable` class on element', () => {
-		expect(element.classes['navigable']).toBeTruthy();
+		expect(element.classes.navigable).toBeTruthy();
 	});
 
 	it('should add `.navigable-selected` class when selected', () => {
@@ -176,7 +178,6 @@ describe('NavigableDirective', () => {
 	});
 
 	describe('pressing DOWN key', () => {
-
 		it('should call `onChange` callback', () => {
 			spyOn(testComponent, 'onChange').and.callThrough();
 			fixture.detectChanges();
@@ -184,8 +185,7 @@ describe('NavigableDirective', () => {
 			// FIXME: refactor below when https://github.com/ariya/phantomjs/issues/11289
 			directive.onKeyDown({
 				code: 'ArrowDown',
-				preventDefault: () => {
-				} // tslint:disable-line
+				preventDefault: () => {} // tslint:disable-line
 			} as KeyboardEvent);
 			// element.nativeElement.dispatchEvent(new KeyboardEvent('keydown', {
 			// 	key: NavigableDirective.KEYS.DOWN
@@ -195,7 +195,6 @@ describe('NavigableDirective', () => {
 		});
 
 		describe('with CTRL+SHIFT modifiers', () => {
-
 			it('should call `onMove` callback', () => {
 				spyOn(testComponent, 'onMove').and.callThrough();
 				fixture.detectChanges();
@@ -221,7 +220,6 @@ describe('NavigableDirective', () => {
 	});
 
 	describe('pressing UP key', () => {
-
 		it('should call `onChange` callback', () => {
 			spyOn(testComponent, 'onChange').and.callThrough();
 			fixture.detectChanges();
@@ -241,7 +239,6 @@ describe('NavigableDirective', () => {
 		});
 
 		describe('with CTRL+SHIFT modifiers', () => {
-
 			it('should call `onMove` callback', () => {
 				spyOn(testComponent, 'onMove').and.callThrough();
 				fixture.detectChanges();

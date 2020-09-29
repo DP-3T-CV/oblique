@@ -5,6 +5,7 @@
       "name": "ObNavigableGroupComponent",
       "selector": "ob-navigable-group",
       "exported": "obNavigableGroup",
+      "type": "component",
       "since": "2.0.0",
       "inputs": [
         {
@@ -32,7 +33,8 @@
     {
       "name": "ObNavigableDirective",
       "selector": "[obNavigable]",
-      "export": "obNavigable",
+      "exported": "obNavigable",
+      "type": "directive",
       "usage": "Set on an <code>nav-tree</code>, it will allow to navigate the tree while maintaining the focus on the filter input.",
       "since": "2.0.0",
       "inputs": [
@@ -74,25 +76,25 @@
         {
           "name": "navigableOnChange",
           "text": "Emits when UP or DOWN key is pressed while a navigable item is focused.",
-          "type": "Observable<NavigableOnChangeEvent>",
+          "type": "Observable<ObNavigableOnChangeEvent>",
           "since": "2.0.0"
         },
         {
           "name": "navigableOnFocus",
-          "text": "Emits whena navigable item is focused.",
+          "text": "Emits when a navigable item is focused.",
           "type": "Observable<FocusEvent>",
           "since": "2.0.0"
         },
         {
           "name": "navigableOnMouseDown",
-          "text": "Emits whena navigable item is clicked.",
+          "text": "Emits when a navigable item is clicked.",
           "type": "Observable<MouseEvent>",
           "since": "2.0.0"
         },
         {
           "name": "navigableOnMouseDown",
-          "text": "Emits whena navigable item is moved.",
-          "type": "Observable<NavigableOnMoveEvent>",
+          "text": "Emits when a navigable item is moved.",
+          "type": "Observable<ObNavigableOnMoveEvent>",
           "since": "2.0.0"
         }
       ]

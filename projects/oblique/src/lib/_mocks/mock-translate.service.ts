@@ -1,17 +1,25 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {DefaultLangChangeEvent, LangChangeEvent, TranslationChangeEvent} from '@ngx-translate/core';
-import {Observable, of} from 'rxjs';
+import {EMPTY, Observable, of} from 'rxjs';
 
 @Injectable()
 export class ObMockTranslateService {
+	translations: any;
 	onLangChange = new EventEmitter<LangChangeEvent>();
 	onTranslationChange = new EventEmitter<TranslationChangeEvent>();
 	onDefaultLangChange = new EventEmitter<DefaultLangChangeEvent>();
 	defaultLang = 'en';
 	langs = ['en'];
+	currentLang = 'en';
 
-	currentLang(): string {
-		return 'en';
+	setTranslation(lang: string, translations: Object, shouldMerge?: boolean): void {}
+
+	getStreamOnTranslationChange(key: string | string[], interpolateParams?: Object): Observable<any> {
+		return EMPTY;
+	}
+
+	stream(key: string | string[], interpolateParams?: Object): Observable<any> {
+		return EMPTY;
 	}
 
 	getBrowserLang(): string {
@@ -22,11 +30,10 @@ export class ObMockTranslateService {
 		return 'en';
 	}
 
-	setDefaultLang(lang: string): void {
-	}
+	setDefaultLang(lang: string): void {}
 
-	get(): Observable<string> {
-		return of('');
+	get(key: string | Array<string>, interpolateParams?: Object): Observable<string | string[]> {
+		return of(key);
 	}
 
 	use(lang: string): Observable<any> {
@@ -53,16 +60,13 @@ export class ObMockTranslateService {
 		return '';
 	}
 
-	set(key: string, value: string, lang?: string): void {
-	}
+	set(key: string, value: string, lang?: string): void {}
 
 	reloadLang(lang: string): Observable<any> {
 		return of('');
 	}
 
-	resetLang(lang: string): void {
-
-	}
+	resetLang(lang: string): void {}
 
 	getBrowserCultureLang(): string {
 		return 'en';

@@ -4,8 +4,8 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NgbDatepickerModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {DatepickerSampleComponent} from './datepicker-sample.component';
-import {DatepickerModule, DatepickerPlaceholderDirective} from 'oblique';
 import {ObliqueTestingModule} from 'oblique/lib/oblique-testing.module';
+import {ObDatepickerModule, ObDatepickerPlaceholderDirective} from 'oblique/lib/datepicker/datepicker.module';
 
 describe('DatepickerSampleComponent', () => {
 	let component: DatepickerSampleComponent;
@@ -14,27 +14,16 @@ describe('DatepickerSampleComponent', () => {
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
 			declarations: [DatepickerSampleComponent],
-			imports: [
-				DatepickerModule,
-				NgbDatepickerModule,
-				NgbTooltipModule,
-				FormsModule,
-				ObliqueTestingModule
-			],
-			schemas: [
-				CUSTOM_ELEMENTS_SCHEMA
-			]
-		}).overrideModule(DatepickerModule, {
-			//We don't need this directive in this test
-			remove: {
-				declarations: [
-					DatepickerPlaceholderDirective
-				],
-				exports: [
-					DatepickerPlaceholderDirective
-				]
-			}
+			imports: [ObDatepickerModule, NgbDatepickerModule, NgbTooltipModule, FormsModule, ObliqueTestingModule],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA]
 		})
+			.overrideModule(ObDatepickerModule, {
+				//We don't need this directive in this test
+				remove: {
+					declarations: [ObDatepickerPlaceholderDirective],
+					exports: [ObDatepickerPlaceholderDirective]
+				}
+			})
 			.compileComponents();
 	}));
 

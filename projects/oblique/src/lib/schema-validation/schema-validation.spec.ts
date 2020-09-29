@@ -2,25 +2,25 @@ import {Component, OnInit} from '@angular/core';
 import {async, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {AbstractControl, FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule} from '@angular/forms';
-import {ObSchemaValidateDirective, ObSchemaValidationDirective, ObSchemaValidationService} from 'oblique';
-
+import {ObSchemaValidationService} from './schema-validation.service';
+import {ObSchemaValidationDirective} from './schema-validation.directive';
+import {ObSchemaValidateDirective} from './schema-validator';
 
 describe('SchemaValidation', () => {
-
 	const schema = {
-		'title': 'SampleSchemaValidation',
-		'type': 'object',
-		'properties': {
-			'string': {
-				'type': 'string',
-				'minLength': 2,
-				'maxLength': 10
+		title: 'SampleSchemaValidation',
+		type: 'object',
+		properties: {
+			string: {
+				type: 'string',
+				minLength: 2,
+				maxLength: 10
 			},
-			'object': {
-				'type': 'object',
-				'properties': {
-					'subproperty': {
-						'type': 'number'
+			object: {
+				type: 'object',
+				properties: {
+					subproperty: {
+						type: 'number'
 					}
 				}
 			}
@@ -29,10 +29,10 @@ describe('SchemaValidation', () => {
 
 	@Component({
 		template: `
-			<form [obSchemaValidation]='schema'>
-				<input type='text' name='string' ngModel obSchemaValidate>
-				<div ngModelGroup='object'>
-					<input type='number' name='subproperty' ngModel obSchemaValidate>
+			<form [obSchemaValidation]="schema">
+				<input type="text" name="string" ngModel obSchemaValidate />
+				<div ngModelGroup="object">
+					<input type="number" name="subproperty" ngModel obSchemaValidate />
 				</div>
 			</form>
 		`
@@ -43,10 +43,10 @@ describe('SchemaValidation', () => {
 
 	@Component({
 		template: `
-			<form [formGroup]='sampleForm'>
-				<input type='text' formControlName='string'>
-				<div formGroupName='object'>
-					<input type='number' formControlName='subproperty'>
+			<form [formGroup]="sampleForm">
+				<input type="text" formControlName="string" />
+				<div formGroupName="object">
+					<input type="number" formControlName="subproperty" />
 				</div>
 			</form>
 		`,
@@ -62,7 +62,7 @@ describe('SchemaValidation', () => {
 
 		ngOnInit() {
 			this.sampleForm = this.formBuilder.group({
-				'string': ['', this.validator.getValidator('string')],
+				string: ['', this.validator.getValidator('string')],
 				object: this.formBuilder.group({
 					subproperty: [null, this.validator.getValidator('object.subproperty')]
 				})
@@ -75,31 +75,30 @@ describe('SchemaValidation', () => {
 	 */
 	[
 		{
-			formType: 'template', testComponent: TemplateFormTestComponent, formModule: FormsModule,
-			getControls: (fixture): { [key: string]: AbstractControl } => fixture.debugElement.query(By.directive(NgForm)).injector.get(NgForm).controls
+			formType: 'template',
+			testComponent: TemplateFormTestComponent,
+			formModule: FormsModule,
+			getControls: (fixture): {[key: string]: AbstractControl} => fixture.debugElement.query(By.directive(NgForm)).injector.get(NgForm).controls
 		},
 		{
-			formType: 'model', testComponent: ModelFormTestComponent, formModule: ReactiveFormsModule,
-			getControls: (fixture): { [key: string]: AbstractControl } => fixture.componentInstance.sampleForm.controls
+			formType: 'model',
+			testComponent: ModelFormTestComponent,
+			formModule: ReactiveFormsModule,
+			getControls: (fixture): {[key: string]: AbstractControl} => fixture.componentInstance.sampleForm.controls
 		}
-	].forEach((CONFIG) => {
+	].forEach(CONFIG => {
 		//TODO: add test for more complex types and required option
 		describe(`in a ${CONFIG.formType} driven form`, () => {
 			let fixture: any;
 			let component;
-			let controls: { [name: string]: AbstractControl };
-			let subproperties: { [name: string]: AbstractControl };
+			let controls: {[name: string]: AbstractControl};
+			let subproperties: {[name: string]: AbstractControl};
 
 			beforeEach(async(() => {
 				TestBed.configureTestingModule({
-					declarations: [
-						CONFIG.testComponent,
-						ObSchemaValidationDirective,
-						ObSchemaValidateDirective
-					],
+					declarations: [CONFIG.testComponent, ObSchemaValidationDirective, ObSchemaValidateDirective],
 					imports: [CONFIG.formModule]
-				})
-					.compileComponents();
+				}).compileComponents();
 			}));
 
 			beforeEach(async(() => {
@@ -109,28 +108,27 @@ describe('SchemaValidation', () => {
 
 				fixture.whenStable().then(() => {
 					controls = CONFIG.getControls(fixture);
-					subproperties = (controls['object'] as FormGroup).controls;
+					subproperties = (controls.object as FormGroup).controls;
 				});
 			}));
 
 			it('should add no errors if input is valid', async(() => {
 				fixture.whenStable().then(() => {
-					controls['string'].setValue('validVal');
+					controls.string.setValue('validVal');
 					fixture.detectChanges();
 
-					expect(controls['string'].errors).toBeNull();
+					expect(controls.string.errors).toBeNull();
 				});
-
 			}));
 
 			it('should add error object if input is invalid', async(() => {
 				fixture.whenStable().then(() => {
-					controls['string'].setValue('wayTooLongStringForTheMaxLength10');
+					controls.string.setValue('wayTooLongStringForTheMaxLength10');
 					//ngControls['string'].valueAccessor.writeValue('wayTooLongStringForTheMaxLength10');
 					fixture.detectChanges();
 
-					expect(controls['string'].errors).not.toBeNull();
-					expect(controls['string'].errors).toEqual({
+					expect(controls.string.errors).not.toBeNull();
+					expect(controls.string.errors).toEqual({
 						maxLength: {
 							limit: 10
 						}
@@ -140,20 +138,20 @@ describe('SchemaValidation', () => {
 
 			it('should add no errors if subproperty is valid', async(() => {
 				fixture.whenStable().then(() => {
-					subproperties['subproperty'].setValue(42);
+					subproperties.subproperty.setValue(42);
 					fixture.detectChanges();
 
-					expect(subproperties['subproperty'].errors).toBeNull();
+					expect(subproperties.subproperty.errors).toBeNull();
 				});
 			}));
 
 			it('should add error object if subproperty is invalid', async(() => {
 				fixture.whenStable().then(() => {
-					subproperties['subproperty'].setValue('aStringForANumberField');
+					subproperties.subproperty.setValue('aStringForANumberField');
 					fixture.detectChanges();
 
-					expect(subproperties['subproperty'].errors).not.toBeNull();
-					expect(subproperties['subproperty'].errors).toEqual({
+					expect(subproperties.subproperty.errors).not.toBeNull();
+					expect(subproperties.subproperty.errors).toEqual({
 						type: {
 							type: 'number'
 						}
@@ -161,7 +159,5 @@ describe('SchemaValidation', () => {
 				});
 			}));
 		});
-
 	});
-
 });

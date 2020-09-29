@@ -3,28 +3,32 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {By} from '@angular/platform-browser';
 import {Component, DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {ObNavTreeComponent, ObNavTreeItemModel} from 'oblique';
 import {ObMockTranslatePipe} from '../_mocks/mock-translate.pipe';
 import {ObMockTranslateService} from '../_mocks/mock-translate.service';
+import {ObNavTreeItemModel} from './nav-tree-item.model';
+import {ObNavTreeComponent} from './nav-tree.component';
 
 @Component({
-	template: `
-		<ob-nav-tree [items]="items"
-					 [prefix]="prefix"
-					 [variant]="variant"
-					 [filterPattern]="filterPattern"
-					 [labelFormatter]="labelFormatter"
-					 [activateAncestors]="activateAncestors"></ob-nav-tree>`
+	template: ` <ob-nav-tree
+		[items]="items"
+		[prefix]="prefix"
+		[variant]="variant"
+		[filterPattern]="filterPattern"
+		[labelFormatter]="labelFormatter"
+		[activateAncestors]="activateAncestors"
+	></ob-nav-tree>`
 })
 class TestComponent {
 	items = [
 		new ObNavTreeItemModel({id: 'A', label: 'A - Label', fragment: 'fragment', queryParams: {foo: 'bar'}}),
 		new ObNavTreeItemModel({
-			id: 'B', label: 'B - Label',
+			id: 'B',
+			label: 'B - Label',
 			items: [
 				new ObNavTreeItemModel({id: 'B-1', label: 'B.1 - Label'}),
 				new ObNavTreeItemModel({
-					id: 'B-2', label: 'B.2 - Label',
+					id: 'B-2',
+					label: 'B.2 - Label',
 					items: [
 						new ObNavTreeItemModel({id: 'B2-1', label: 'B.2.1 - Label'}),
 						new ObNavTreeItemModel({id: 'B2-2', label: 'B.2.2 - Label'}),
@@ -35,7 +39,8 @@ class TestComponent {
 			]
 		}),
 		new ObNavTreeItemModel({
-			id: 'C', label: 'C - Label',
+			id: 'C',
+			label: 'C - Label',
 			items: [
 				new ObNavTreeItemModel({id: 'C-1', label: 'C.1 - Label'}),
 				new ObNavTreeItemModel({id: 'C-2', label: 'C.2 - Label'}),
@@ -141,7 +146,7 @@ describe('NavTreeComponent', () => {
 	});
 
 	it('should filter navigation items', () => {
-		component.filterPattern = '2';  // Filter on '2' pattern
+		component.filterPattern = '2'; // Filter on '2' pattern
 		fixture.detectChanges();
 
 		// All items containing the string '2' and their respective parents should be visible:
@@ -151,7 +156,7 @@ describe('NavTreeComponent', () => {
 
 	it('should highlight patterns on filtered navigation items', () => {
 		// Restore default label formatter:
-		const translate = TestBed.get(TranslateService);
+		const translate = TestBed.inject(TranslateService);
 		component.labelFormatter = ObNavTreeComponent.DEFAULTS.LABEL_FORMATTER(translate);
 		component.filterPattern = 'C'; // Filter on 'C' pattern
 		fixture.detectChanges();
@@ -161,7 +166,7 @@ describe('NavTreeComponent', () => {
 		expect(navItems.length).toBe(4);
 
 		// ...and filter patterns highlighted:
-		navItems.forEach((item) => {
+		navItems.forEach(item => {
 			expect(item.nativeElement.innerHTML).toContain(ObNavTreeComponent.DEFAULTS.HIGHLIGHT);
 		});
 	});

@@ -2,13 +2,12 @@ import {TestBed, ComponentFixture, async, inject} from '@angular/core/testing';
 import {Component, EventEmitter, DebugElement} from '@angular/core';
 import {By} from '@angular/platform-browser';
 import {TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import {ObDatepickerPlaceholderDirective} from 'oblique';
+import {ObDatepickerPlaceholderDirective} from './datepicker-placeholder.directive';
 
 @Component({
 	template: '<input ngbDatepicker />'
 })
-class TestComponent {
-}
+class TestComponent {}
 
 describe('DatepickerPlaceholderDirective', () => {
 	let testComponent: TestComponent;
@@ -33,14 +32,12 @@ describe('DatepickerPlaceholderDirective', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [
-				TestComponent,
-				ObDatepickerPlaceholderDirective
-			],
+			declarations: [TestComponent, ObDatepickerPlaceholderDirective],
 			imports: [],
 			providers: [
 				{
-					provide: TranslateService, useValue: {
+					provide: TranslateService,
+					useValue: {
 						currentLang: 'en',
 						onLangChange: new EventEmitter<LangChangeEvent>()
 					}
@@ -55,19 +52,19 @@ describe('DatepickerPlaceholderDirective', () => {
 		});
 
 		it('should set a placeholder on the input element', () => {
-			expect(element.properties['placeholder']).toBeDefined();
+			expect(element.properties.placeholder).toBeDefined();
 		});
 
 		it('should set the placeholder for the current lang', () => {
-			expect(element.properties['placeholder']).toBe(I18N_PLACEHOLDERS['en']);
+			expect(element.properties.placeholder).toBe(I18N_PLACEHOLDERS.en);
 		});
 
-		it('should change the placeholder onLangChange', inject([TranslateService], (translateService) => {
+		it('should change the placeholder onLangChange', inject([TranslateService], translateService => {
 			translateService.onLangChange.emit({lang: 'de'});
 
 			fixture.detectChanges();
 
-			expect(element.properties['placeholder']).toBe(I18N_PLACEHOLDERS['de']);
+			expect(element.properties.placeholder).toBe(I18N_PLACEHOLDERS.de);
 		}));
 	});
 
@@ -77,16 +74,16 @@ describe('DatepickerPlaceholderDirective', () => {
 			createFixture();
 		}));
 
-		it('shouldn\'t change the placeholder', () => {
-			expect(element.properties['placeholder']).toBe('custom');
+		it("shouldn't change the placeholder", () => {
+			expect(element.properties.placeholder).toBe('custom');
 		});
 
-		it('shouldn\'t change the placeholder onLangChange', inject([TranslateService], (translateService) => {
+		it("shouldn't change the placeholder onLangChange", inject([TranslateService], translateService => {
 			translateService.onLangChange.emit({lang: 'de'});
 
 			fixture.detectChanges();
 
-			expect(element.properties['placeholder']).toBe('custom');
+			expect(element.properties.placeholder).toBe('custom');
 		}));
 	});
 });

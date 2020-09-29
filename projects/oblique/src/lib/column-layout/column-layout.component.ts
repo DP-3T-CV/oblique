@@ -16,8 +16,8 @@ import {merge} from 'rxjs';
 import {ObColumnPanelDirective} from './column-panel.directive';
 import {ObScrollingEvents} from '../scrolling/scrolling-events';
 import {ObMasterLayoutService} from '../master-layout/master-layout.service';
-import {ObEMasterLayoutEventValues} from '../master-layout/master-layout.utility';
 import {WINDOW} from '../utilities';
+import {ObEMasterLayoutEventValues} from '../master-layout/master-layout.datatypes';
 
 @Component({
 	selector: 'ob-column-layout',
@@ -80,7 +80,7 @@ export class ObColumnLayoutComponent implements AfterViewInit {
 	private center(): void {
 		const dimension = this.el.nativeElement.getBoundingClientRect();
 		const middle = ObColumnLayoutComponent.visibleHeight(dimension, this.window) / 2;
-		const top = (this.master.layout.isFixed || this.window.innerHeight > dimension.height) ? '50%' : `${middle}px`;
+		const top = this.master.layout.isFixed || this.window.innerHeight > dimension.height ? '50%' : `${middle}px`;
 		this.toggles.forEach(toggle => this.renderer.setStyle(toggle.nativeElement, 'top', top));
 	}
 }

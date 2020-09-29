@@ -1,12 +1,11 @@
 import {inject, TestBed} from '@angular/core/testing';
 import {first} from 'rxjs/operators';
-import {ObNotificationService, ObSpinnerService} from 'oblique';
 import {ObISpinnerEvent} from './spinner-event';
+import {ObSpinnerService} from './spinner.service';
 
 describe('SpinnerService', () => {
 	let mockNotificationService;
 	beforeEach(() => {
-
 		mockNotificationService = {
 			warning: jest.fn(),
 			error: jest.fn(),
@@ -15,10 +14,7 @@ describe('SpinnerService', () => {
 		};
 
 		TestBed.configureTestingModule({
-			providers: [
-				ObSpinnerService,
-				{provide: ObNotificationService, useValue: mockNotificationService}
-			]
+			providers: [ObSpinnerService]
 		});
 	});
 

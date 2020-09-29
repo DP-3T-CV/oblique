@@ -1,9 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {TranslateService} from '@ngx-translate/core';
-import {ObSearchBoxResultsComponent} from 'oblique';
 import {ObMockTranslatePipe} from '../_mocks/mock-translate.pipe';
 import {ObMockTranslateService} from '../_mocks/mock-translate.service';
+import {ObSearchBoxResultsComponent} from './search-box-results.component';
 
 describe('SearchBoxResultsComponent', () => {
 	let component: ObSearchBoxResultsComponent;
@@ -11,18 +11,10 @@ describe('SearchBoxResultsComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [
-				ObSearchBoxResultsComponent,
-				ObMockTranslatePipe
-			],
-			imports: [
-				RouterTestingModule
-			],
-			providers: [
-				{provide: TranslateService, useClass: ObMockTranslateService}
-			]
-		})
-			.compileComponents();
+			declarations: [ObSearchBoxResultsComponent, ObMockTranslatePipe],
+			imports: [RouterTestingModule],
+			providers: [{provide: TranslateService, useClass: ObMockTranslateService}]
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {

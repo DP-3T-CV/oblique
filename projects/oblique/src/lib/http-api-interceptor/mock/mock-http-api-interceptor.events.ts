@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {EMPTY, Observable, of} from 'rxjs';
-import {ObIHttpApiRequest} from '../http-api-interceptor.module';
+import {ObIHttpApiRequest} from '../http-api-interceptor.events';
 
 @Injectable()
 export class ObMockHttpApiInterceptorEvents {
@@ -12,18 +12,13 @@ export class ObMockHttpApiInterceptorEvents {
 		return EMPTY;
 	}
 
-	sessionExpire(): void {
-	}
+	sessionExpire(): void {}
 
-	requestIntercept(request: ObIHttpApiRequest): void {
-	}
+	requestIntercept(request: ObIHttpApiRequest): void {}
 
-	deactivateSpinnerOnNextAPICalls(number = 1): void {
-	}
+	deactivateSpinnerOnNextAPICalls(number = 1): void {}
 
-	deactivateNotificationOnNextAPICalls(number = 1): void {
-	}
+	deactivateNotificationOnNextAPICalls(number = 1): void {}
 
-	deactivateOnNextAPICalls(number = 1): void {
-	}
+	deactivateOnNextAPICalls(number = 1): void {}
 }

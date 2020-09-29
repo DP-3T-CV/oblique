@@ -1,9 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {ObTopControlComponent} from 'oblique';
 import {TranslateService} from '@ngx-translate/core';
 import {ObMockTranslatePipe} from '../_mocks/mock-translate.pipe';
 import {ObMockTranslateService} from '../_mocks/mock-translate.service';
 import {windowProvider, WINDOW} from '../utilities';
+import {ObTopControlComponent} from './top-control.component';
 
 describe('TopControlComponent', () => {
 	let fixture: ComponentFixture<ObTopControlComponent>;
@@ -11,13 +11,10 @@ describe('TopControlComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [
-				ObTopControlComponent,
-				ObMockTranslatePipe
-			],
+			declarations: [ObTopControlComponent, ObMockTranslatePipe],
 			providers: [
 				{provide: TranslateService, useClass: ObMockTranslateService},
-				{provide: WINDOW, useValue: windowProvider},
+				{provide: WINDOW, useValue: windowProvider}
 			]
 		}).compileComponents();
 	}));
@@ -38,6 +35,4 @@ describe('TopControlComponent', () => {
 		expect(spy).toHaveBeenCalled();
 		spy.mockRestore();
 	});
-
-
 });

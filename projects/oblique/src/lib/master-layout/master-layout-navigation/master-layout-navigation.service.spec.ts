@@ -3,7 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {of} from 'rxjs';
 
 import {ObMasterLayoutNavigationService} from './master-layout-navigation.service';
-import {ObMasterLayoutConfig} from 'oblique';
+import {ObMasterLayoutConfig} from '../master-layout.config';
 
 describe('MasterLayoutNavigationService', () => {
 	let service: ObMasterLayoutNavigationService;
@@ -13,18 +13,19 @@ describe('MasterLayoutNavigationService', () => {
 	const mockMasterLayout = {
 		navigation: {}
 	};
-	beforeEach(() => TestBed.configureTestingModule({
-		providers: [
-			{provide: TranslateService, useValue: translateMock},
-			{provide: ObMasterLayoutConfig, useValue: mockMasterLayout}
-		]
-	}));
+	beforeEach(() =>
+		TestBed.configureTestingModule({
+			providers: [
+				{provide: TranslateService, useValue: translateMock},
+				{provide: ObMasterLayoutConfig, useValue: mockMasterLayout}
+			]
+		})
+	);
 
 	it('should be created', () => {
-		service = TestBed.get(ObMasterLayoutNavigationService);
+		service = TestBed.inject(ObMasterLayoutNavigationService);
 		expect(service).toBeTruthy();
 	});
-
 
 	it('should emit scrolledLeft on scrollLeft call', fakeAsync(() => {
 		let emitted = false;

@@ -3,10 +3,14 @@ import {CommonModule} from '@angular/common';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
-import {ObINotification, ObNotificationComponent, ObNotificationConfig, ObNotificationService, ObENotificationType} from 'oblique';
 import {ObMockTranslatePipe} from '../_mocks/mock-translate.pipe';
-import {ObMockNotificationConfig, ObMockNotificationService} from './mock/mock-notification.module';
 import {Subject} from 'rxjs';
+import {ObNotificationComponent} from './notification.component';
+import {ObNotificationConfig} from './notification.config';
+import {ObNotificationService} from './notification.service';
+import {ObENotificationType, ObINotification} from './notification.interfaces';
+import {ObMockNotificationConfig} from './mock/mock-notification.config';
+import {ObMockNotificationService} from './mock/mock-notification.service';
 
 describe('NotificationComponent', () => {
 	let component: ObNotificationComponent;
@@ -25,8 +29,7 @@ describe('NotificationComponent', () => {
 				{provide: ObNotificationConfig, useClass: ObMockNotificationConfig},
 				{provide: ObNotificationService, useClass: ObMockNotificationService}
 			]
-		})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
@@ -137,7 +140,6 @@ describe('NotificationComponent', () => {
 		const htmlNotifications = fixture.debugElement.queryAll(By.css('.notification'));
 		expect(htmlNotifications.length).toBe(0);
 	}));
-
 
 	it('should *not* close a _sticky_ notification after `timeout` is reached', fakeAsync(() => {
 		component.open({

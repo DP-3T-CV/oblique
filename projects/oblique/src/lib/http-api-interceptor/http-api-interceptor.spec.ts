@@ -2,16 +2,19 @@ import {async, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController, TestRequest} from '@angular/common/http/testing';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {ObNotificationService, ObENotificationType, ObHttpApiInterceptorConfig, ObHttpApiInterceptorEvents, ObIHttpApiRequest, ObSpinnerService} from 'oblique';
 import {of} from 'rxjs';
 import {finalize} from 'rxjs/operators';
+import {ObIHttpApiRequest, ObHttpApiInterceptorEvents} from './http-api-interceptor.events';
+import {ObHttpApiInterceptorConfig} from './http-api-interceptor.config';
+import {ObSpinnerService} from '../spinner/spinner.service';
+import {ObNotificationService} from '../notification/notification.service';
+import {ObENotificationType} from '../notification/notification.interfaces';
 
 @Injectable()
 class DataService {
 	static ROOT_URL = 'http://jsonplaceholder.typicode.com';
 
-	constructor(private readonly http: HttpClient) {
-	}
+	constructor(private readonly http: HttpClient) {}
 
 	getUsers() {
 		return this.http.get(`${DataService.ROOT_URL}/users`);
@@ -69,16 +72,16 @@ describe('HttpApiInterceptor', () => {
 			]
 		});
 
-		service = TestBed.get(DataService);
-		httpMock = TestBed.get(HttpTestingController);
-		config = TestBed.get(ObHttpApiInterceptorConfig);
-		events = TestBed.get(ObHttpApiInterceptorEvents);
-		spinner = TestBed.get(ObSpinnerService);
-		notification = TestBed.get(ObNotificationService);
+		service = TestBed.inject(DataService);
+		httpMock = TestBed.inject(HttpTestingController);
+		config = TestBed.inject(ObHttpApiInterceptorConfig);
+		events = TestBed.inject(ObHttpApiInterceptorEvents);
+		spinner = TestBed.inject(ObSpinnerService);
+		notification = TestBed.inject(ObNotificationService);
 	}));
 
 	it('should add an X-Requested-With header', () => {
-		service = TestBed.get(DataService);
+		service = TestBed.inject(DataService);
 		const httpRequest = getUsers();
 		expect(httpRequest.request.headers.has('X-Requested-With'));
 	});
@@ -146,7 +149,7 @@ describe('HttpApiInterceptor', () => {
 		getError(0, () => expect(notification.send).toHaveBeenCalledWith('test', 'test', ObENotificationType.ERROR));
 	});
 
-	xit('should display a notification after timeout is expired', (done) => {
+	xit('should display a notification after timeout is expired', done => {
 		config.timeout = 1;
 		spyOn(notification, 'warning');
 		getAsyncUsers(() => {
@@ -172,9 +175,12 @@ describe('HttpApiInterceptor', () => {
 
 	function buildRequest(success?: Function): TestRequest {
 		// call success in `finalize` because `subscribe` is called before `complete` callback
-		service.getUsers().pipe(finalize(() => success && success())).subscribe(response => {
-			expect(response).toBeTruthy();
-		});
+		service
+			.getUsers()
+			.pipe(finalize(() => success && success()))
+			.subscribe(response => {
+				expect(response).toBeTruthy();
+			});
 		const req = httpMock.expectOne(`${DataService.ROOT_URL}/users`);
 		expect(req.request.method).toEqual('GET');
 
@@ -182,7 +188,7 @@ describe('HttpApiInterceptor', () => {
 	}
 
 	function getError(code: number, error?: Function): TestRequest {
-		service.getError(code).subscribe(undefined, (response) => {
+		service.getError(code).subscribe(undefined, response => {
 			expect(response).toBeTruthy();
 			if (error) {
 				error();
